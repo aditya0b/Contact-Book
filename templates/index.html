@@ -1,0 +1,74 @@
+<!-- Jinja Teamplating to connect the Layout.html to the index.html -->
+{% extends "Layout.html" %}
+
+<!-- Inserting the content in block  -->
+{% block content %}
+
+<!-- Linking the CSS file -->
+<link rel="stylesheet" href="{{url_for('static', filename='/css/index.css')}}">
+
+<!-- Body -->
+<body>
+  <!-- Heading in UI -->
+    <div class="top-head">
+        <h1 class="h1">Contact Book</h1>
+        <h2 class="h2">Save your contacts !</h2>
+    </div>
+    <!-- Form Section in UI -->
+    <div class="middle-body">
+      <!-- Sending the data from the user to Database -->
+        <form method="POST" action="{{url_for('home')}}">  
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" required name="name" class="form-control" id="name">
+            </div>
+
+            <div class="mb-3">
+                <label for="ct-number" class="form-label">Contact Number</label>
+                <input type="text" required inputmode="numeric" name="ctnumber" class="form-control" id="ct-number">
+
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" required class="form-control" name="email" id="email">
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" style="left: 50%; position: relative; transform: translateX(-50%); width: 20%;color: #fff; border: dashed 1px #ffffff;" class="btn bg-transparent">Save</button>
+            </div>
+        </form>
+    </div>
+    <!-- Displaying the Contents in the Table form -->
+    <div class="bottom-content">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Serial No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Email Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Retrieving the data from the server.py -->
+              {% for cts in cts %}
+                <tr>
+
+                  <!-- Display data -->
+                  <th scope="row">{{cts['id']}}</th>
+                  <td colspan="1">{{cts['name']}}</td>
+                  <td colspan="1">{{cts['ctnumber']}}</td>
+                  <td colspan="1">{{cts['email_address']}}</td>
+                </tr>
+                
+                <!-- Endng of the for loop -->
+              {% endfor %}
+            
+            </tbody>
+          </table>
+    </div>
+</body>
+
+<!-- Ending of the Block  -->
+{% endblock %}
